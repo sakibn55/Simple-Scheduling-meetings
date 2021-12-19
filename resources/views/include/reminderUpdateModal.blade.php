@@ -6,7 +6,7 @@
           <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
         </div>
         <form id="UpdateReminderForm" action="/reminder" method="POST">
-        <div class="modal-body">
+            <div class="modal-body">
 
                 @csrf
                 {{ method_field('PUT') }}
