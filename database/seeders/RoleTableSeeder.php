@@ -22,6 +22,10 @@ class RoleTableSeeder extends Seeder
         $counselors->title = 'counselors';
         $counselors->save();
 
+        $advisor = new Role();
+        $advisor->title = 'advisor';
+        $advisor->save();
+
         $role_admin = new Role();
         $role_admin->title = 'admin';
         $role_admin->save();
