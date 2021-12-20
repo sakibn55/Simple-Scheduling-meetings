@@ -28,6 +28,7 @@ Route::get('/dashboard', function () {
 require __DIR__.'/auth.php';
 
 Route::resource('reminder','App\Http\Controllers\ReminderController');
+
 Route::get('/appointments', [MyAppointmentsController::class, 'index']);
 
 //admin controller

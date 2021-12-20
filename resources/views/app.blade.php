@@ -20,6 +20,7 @@
   <link href="{{asset('css/main.css')}}" rel="stylesheet">
 </head>
 <body>
+    @include('include.header')
     <div class="body-inner">
     <!-- Body Inner -->
     <div class="page-wrapper">
