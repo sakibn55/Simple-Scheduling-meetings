@@ -47,4 +47,16 @@ class User extends Authenticatable
     public function role(){
         return $this->hasOne(Role::class, 'id', 'role_id');
     }
+
+    public function studentReminder(){
+        return $this->hasMany(Reminder::class, 'student_id','id');
+     }
+
+     public function advisorReminder(){
+        return $this->hasMany(Reminder::class, 'advisor_id','id');
+     }
+
+     public function advisor(){
+        return $this->hasMany(Advisor::class, 'user_id','id');
+     }
 }

@@ -25,7 +25,10 @@ class CreateRemindersTable extends Migration
             $table->integer('range');
             $table->dateTime('start');
             $table->dateTime('end');
-            $table->boolean('repeat_mode')->default(0);
+            $table->unsignedInteger('student_id');
+            $table->foreign('student_id')->references('id')->on('users');
+            $table->unsignedInteger('advisor_id');
+            $table->foreign('advisor_id')->references('id')->on('users');
             $table->timestamps();
         });
     }

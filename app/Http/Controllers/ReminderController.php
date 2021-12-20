@@ -3,15 +3,30 @@
 namespace App\Http\Controllers;
 
 use PDOException;
+use App\Models\User;
 use App\Models\Reminder;
 use Illuminate\Support\Str;
-use Illuminate\Http\Request;
 
+use Illuminate\Http\Request;
 use function PHPUnit\Framework\isNull;
 use Illuminate\Contracts\Support\ValidatedData;
 
 class ReminderController extends Controller
 {
+
+    protected function validateData(Request $request){
+        $request->validate([
+            'title' => 'required|max:50',
+            'description' => 'required|max:255',
+            'location_title' => 'required|max:255',
+            'lattitude' => 'max:20',
+            'longitude' => 'max:20',
+            'range' => 'required|integer',
+            'start' => 'required|date|max:255',
+            'end' => 'required|date|max:255',
+            'advisor_email' =>'required|email',
+        ]);
+    }
     /**
      * Display a listing of the resource.
      *
@@ -20,26 +35,64 @@ class ReminderController extends Controller
     public function index(Request $request)
     {
 
-        if($request->ajax())
-    	{
-    		$data = Reminder::whereDate('start', '>=', $request->start)
-                       ->whereDate('end',   '<=', $request->end)
-                       ->get(['slug', 'title', 'start', 'end','status']);
+        // if($request->ajax())
+    	// {
+    	// 	$data = Reminder::whereDate('start', '>=', $request->start)
+        //                ->whereDate('end',   '<=', $request->end)
+        //                ->get(['slug', 'title', 'start', 'end','status']);
 
-            $data= $data->map(function($d)
-            {
-                $d['overlap'] = false;
-                if(!$d['status']){
-                    $d['className'] = 'bg-danger text-white';
-                }else{
+        //     $data= $data->map(function($d)
+        //     {
+        //         $d['overlap'] = false;
+        //         if(!$d['status']){
+        //             $d['className'] = 'bg-danger text-white';
+        //         }else{
+        //             $d['className'] = 'bg-success text-white';
+        //         }
+        //         return $d;
+        //     });
+
+        //     return response()->json($data);
+    	// }
+
+
+        $advisors = User::whereHas('role', function($query){
+            $query->where('title','advisor');
+        } )->get();
+
+        $data = [];
+
+        if($request->isMethod('GET')){
+            if(isset($request->advisor_email) && $request->advisor_email != null){
+                $advisor_email = $request->advisor_email;
+                $advisor = User::where('email', $advisor_email)->first();
+                $advisor_avaibility = $advisor->advisor()->get();
+
+                $data= $advisor_avaibility->map(function($d)
+                {
                     $d['className'] = 'bg-success text-white';
-                }
-                return $d;
-            });
+                    //$d['selectable'] = true;
+                    $d['rendering'] = 'background';
+                    return $d;
+                });
+            }else{
+                $data = Reminder::all();
+                $data= $data->map(function($d)
+                {
+                    $d['selectable'] = true;
+                    if(!$d['status']){
+                        $d['className'] = 'bg-danger text-white';
+                    }else{
+                        $d['className'] = 'bg-success text-white';
+                    }
+                    return $d;
+                });
+            }
 
-            return response()->json($data);
-    	}
-    	return view('reminder.reminder_view');
+        }
+
+        $data = json_encode($data);
+    	return view('reminder.reminder_view',compact('data','advisors'));
     }
 
     /**
@@ -64,7 +117,7 @@ class ReminderController extends Controller
         $this->validateData($request);
 
         try{
-
+            $advisor = User::where('email',$request->advisor_email)->first()->id;
             $reminder = new Reminder();
             $reminder->title = $request->title;
             $reminder->description = $request->description;
@@ -74,7 +127,8 @@ class ReminderController extends Controller
             $reminder->range = $request->range;
             $reminder->start = $request->start;
             $reminder->end = $request->end;
-
+            $reminder->student_id = auth()->user()->id;
+            $reminder->advisor_id = $advisor;
             $reminder->save();
             return redirect()->back()->with('success','Successfully Saved your appointment');
 
@@ -185,16 +239,5 @@ class ReminderController extends Controller
         return redirect()->back()->with('info','Something went wrong! please try again.');
     }
 
-    protected function validateData(Request $request){
-        $request->validate([
-            'title' => 'required|max:50',
-            'description' => 'required|max:255',
-            'location_title' => 'required|max:255',
-            'lattitude' => 'max:20',
-            'longitude' => 'max:20',
-            'range' => 'required|integer',
-            'start' => 'required|date|max:255',
-            'end' => 'required|date|max:255',
-        ]);
-    }
+
 }

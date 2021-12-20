@@ -13,6 +13,9 @@
     <!-- Stylesheets & Fonts -->
     <link rel="stylesheet" href="{{asset('css/bootstrap.min.css')}}"">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+    {{-- include full calendar cdn --}}
+    @include('include.fullcalenderCDN')
+
   @yield('head')
   <link href="{{asset('css/main.css')}}" rel="stylesheet">
 </head>

@@ -10,6 +10,11 @@
 
                     @csrf
                     <div class="form-group">
+                        <label for="title">Advisor</label>
+                        <input type="email"  class="form-control" value="@if(request('advisor_email') !== null){{request('advisor_email')}}@endif" name="advisor_email" required>
+                      </div>
+
+                    <div class="form-group">
                       <label for="title">Title</label>
                       <input type="text" class="form-control" id="title" name="title" placeholder="Enter Title" required>
                     </div>

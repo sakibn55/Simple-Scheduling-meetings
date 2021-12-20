@@ -24,4 +24,14 @@ class Reminder extends Model
         ];
     }
 
+
+
+    public function student(){
+        return $this->belongsTo(User::class, 'student_id' ,'id');
+    }
+
+    public function advisor(){
+        return $this->belongsTo(User::class, 'advisor_id' ,'id');
+    }
+
 }
