@@ -35,32 +35,12 @@ class ReminderController extends Controller
     public function index(Request $request)
     {
 
-        // if($request->ajax())
-    	// {
-    	// 	$data = Reminder::whereDate('start', '>=', $request->start)
-        //                ->whereDate('end',   '<=', $request->end)
-        //                ->get(['slug', 'title', 'start', 'end','status']);
-
-        //     $data= $data->map(function($d)
-        //     {
-        //         $d['overlap'] = false;
-        //         if(!$d['status']){
-        //             $d['className'] = 'bg-danger text-white';
-        //         }else{
-        //             $d['className'] = 'bg-success text-white';
-        //         }
-        //         return $d;
-        //     });
-
-        //     return response()->json($data);
-    	// }
-
-
         $advisors = User::whereHas('role', function($query){
             $query->where('title','advisor');
         } )->get();
 
         $data = [];
+        $reminderObj = [];
 
         if($request->isMethod('GET')){
             if(isset($request->advisor_email) && $request->advisor_email != null){
@@ -71,27 +51,34 @@ class ReminderController extends Controller
                 $data= $advisor_avaibility->map(function($d)
                 {
                     $d['className'] = 'bg-success text-white';
-                    //$d['selectable'] = true;
                     $d['rendering'] = 'background';
                     return $d;
                 });
-            }else{
-                $data = Reminder::all();
-                $data= $data->map(function($d)
-                {
-                    $d['selectable'] = true;
-                    if(!$d['status']){
-                        $d['className'] = 'bg-danger text-white';
-                    }else{
-                        $d['className'] = 'bg-success text-white';
+
+                $reminder = auth()->user()->studentReminder()->where('advisor_id', $advisor->id)->get();
+
+                if(count($reminder) > 0){
+
+                    foreach ($reminder as $item){
+
+                        if($item->status){
+                            $item['className'] = 'bg-primary text-white';
+                            $item['confirmText'] = 'Appointment Confirmed';
+                        } else{
+                            $item['className'] = 'bg-warning text-white';
+                            $item['confirmText'] = 'Appointment Not Confirmed Yet';
+                        }
+                        $data[] = $item;
                     }
-                    return $d;
-                });
+                }
+
             }
 
         }
 
         $data = json_encode($data);
+
+
     	return view('reminder.reminder_view',compact('data','advisors'));
     }
 

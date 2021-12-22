@@ -53,5 +53,10 @@ Route::post('/advisor/confirmation', [AdvisorController::class, 'confirmation'])
 
 
 //student controller
-Route::get('/student', [StudentController::class, 'myReminders'])->name('student.myReminders');
+Route::get('/student', [StudentController::class, 'index'])->name('student.index');
+Route::get('/student/reminders', [StudentController::class, 'myReminders'])->name('student.myReminders');
+
+//get advisor avaibilities
+
+Route::get('/advisor/avaibility', [StudentController::class, 'advisorAvaibility'])->name('student.advisorAvaibility');
 
