@@ -4,16 +4,22 @@ $(document).ready(function () {
             'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
         }
     });
+    const currentDate = new Date();
     var AdvisorCalendar = $('#AdvisorCalendar').fullCalendar({
         editable: true,
-        defaultView: 'agendaWeek',
+        defaultView: 'agenda',
         initialView: 'listWeek',
         header: {
             left: 'prev,next today',
             center: 'title',
             right: 'month,agendaWeek,agendaDay'
         },
-
+        visibleRange: function (currentDate) {
+            return {
+                start: currentDate.clone().subtract(1, 'days'),
+                end: currentDate.clone().add(5, 'days') // exclusive end, so 3
+            };
+        },
         events: '/advisor',
         selectable: true,
         selectHelper: true,

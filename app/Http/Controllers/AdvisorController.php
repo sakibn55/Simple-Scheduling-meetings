@@ -20,16 +20,12 @@ class AdvisorController extends Controller
         return view('advisor.advisor_reminder',compact('reminders'));
     }
 
-    public function getAvability(Request $request){
+    public function getAvaibility(Request $request){
         if($request->ajax())
     	{
             $data = auth()->user()->advisor()->whereDate('start', '>=', $request->start)
             ->whereDate('end',   '<=', $request->end)
             ->get(['id', 'start', 'end']);
-
-    		// $data = Advisor::whereDate('start', '>=', $request->start)
-            //            ->whereDate('end',   '<=', $request->end)
-            //            ->get(['id', 'start', 'end'])->where('user_id', auth()->user()->id);
 
             $data= $data->map(function($d)
             {

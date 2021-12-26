@@ -18,18 +18,29 @@ use App\Http\Controllers\StudentController;
 */
 
 Route::get('/', function () {
-    return view('welcome');
+    return redirect()->route('login');
 });
 
 Route::get('/dashboard', function () {
-    return view('dashboard');
+    $role = auth()->user()->role->title;
+    switch ($role) {
+        case 'student':
+            return redirect()->route('student.index');
+            break;
+        case 'advisor':
+            return redirect()->route('advisor.getAvability');
+            break;
+        case 'admin':
+            return redirect()->route('admin.appointments');
+            break;
+    }
 })->middleware(['auth'])->name('dashboard');
 
-require __DIR__.'/auth.php';
+require __DIR__ . '/auth.php';
 
-Route::resource('reminder','App\Http\Controllers\ReminderController');
+Route::resource('reminder', 'App\Http\Controllers\ReminderController');
 
-Route::get('/appointments', [MyAppointmentsController::class, 'index']);
+Route::get('/appointments', [MyAppointmentsController::class, 'index'])->name('admin.appointments');
 
 //admin controller
 Route::get('/admin/counselors', [AdminController::class, 'getCounselors'])->name('admin.counselors');
@@ -43,7 +54,7 @@ Route::get('/admin/students', [AdminController::class, 'getStudents'])->name('ad
 
 //advisor
 Route::get('/advisor/reminder', [AdvisorController::class, 'myReminders'])->name('advisor.myReminders');
-Route::get('/advisor', [AdvisorController::class, 'getAvability'])->name('advisor.getAvability');
+Route::get('/advisor', [AdvisorController::class, 'getAvaibility'])->name('advisor.getAvability');
 Route::post('/advisor/store', [AdvisorController::class, 'store'])->name('advisor.store');
 Route::post('/advisor/update', [AdvisorController::class, 'update'])->name('advisor.update');
 
@@ -58,5 +69,4 @@ Route::get('/student/reminders', [StudentController::class, 'myReminders'])->nam
 
 //get advisor avaibilities
 
-Route::get('/advisor/avaibility', [StudentController::class, 'advisorAvaibility'])->name('student.advisorAvaibility');
-
+Route::get('/advisor/avaibility/{advisor_email}', [StudentController::class, 'advisorAvaibility'])->name('student.advisorAvaibility');
