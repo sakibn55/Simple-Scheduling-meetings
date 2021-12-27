@@ -119,11 +119,66 @@ $(document).ready(function () {
                     $('#location_title_update').val(response.location_title);
                     $('#lattitudeUpdate').val(response.lattitude);
                     $('#longitudeUpdate').val(response.longitude);
-                    $('#rangeUpdate').val(response.range);
                     $('#startUpdate').val(response.start);
                     $('#endUpdate').val(response.end);
                     $('#UpdateSlug').val(response.slug);
                     $('#UpdateReminderForm').attr('action', '/reminder/' + slug);
+
+
+                    //mapbox update
+                    var longitudeUpdate = $('#longitudeUpdate').val();
+                    var lattitudeUpdate = $('#lattitudeUpdate').val();
+
+                    const map_update = new mapboxgl.Map({
+                        container: 'map_update', // Container ID
+                        style: 'mapbox://styles/mapbox/streets-v11', // Map style to use
+                        center: [longitudeUpdate, lattitudeUpdate], // Starting position [lng, lat]
+                        zoom: 12, // Starting zoom level
+                    });
+
+                    const markerUpdate = new mapboxgl.Marker() // initialize a new marker
+                        .setLngLat([longitudeUpdate, lattitudeUpdate]) // Marker [lng, lat] coordinates
+                        .addTo(map_update);
+
+                    const geocoderUpdate = new MapboxGeocoder({
+                        // Initialize the geocoder
+                        accessToken: mapboxgl.accessToken, // Set the access token
+                        mapboxgl: mapboxgl, // Set the mapbox-gl instance
+                        marker: true // Do not use the default marker style
+                    });
+                    // Add the geocoder to the map
+                    map_update.addControl(geocoderUpdate);
+                    // After the map style has loaded on the page,
+                    // add a source layer and default styling for a single point
+                    map_update.on('load', () => {
+                        map_update.addSource('single-point', {
+                            type: 'geojson',
+                            data: {
+                                type: 'FeatureCollection',
+                                features: []
+                            }
+                        });
+
+                        map_update.addLayer({
+                            id: 'point',
+                            source: 'single-point',
+                            type: 'circle',
+                            paint: {
+                                'circle-radius': 10,
+                                'circle-color': '#448ee4'
+                            }
+                        });
+
+                        // Listen for the `result` event from the Geocoder
+                        // `result` event is triggered when a user makes a selection
+                        //  Add a marker at the result's coordinates
+                        geocoderUpdate.on('result', (event) => {
+                            map.getSource('single-point').setData(event.result.geometry);
+                            let cord = event.result.geometry.coordinates;
+                            $('#lattitudeUpdate').val(cord[1]);
+                            $('#longitudeUpdate').val(cord[0]);
+                        });
+                    });
 
                 }
             })
@@ -274,4 +329,8 @@ $(document).ready(function () {
         },
 
     });
+
+
+
+
 });

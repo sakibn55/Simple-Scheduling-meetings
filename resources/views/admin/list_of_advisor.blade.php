@@ -8,7 +8,7 @@
             <div class="col">
                 <div class="card boder-info mt-5">
                     <div class="card-header bg-info text-white">
-                        <h3>List of Students</h3>
+                        <h3>List of Advisors</h3>
                     </div>
 
                     <div class="card-body">
@@ -23,17 +23,19 @@
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    @foreach ($students as $index => $student)
+                                    @foreach ($advisor as $index => $data)
 
                                         <tr>
                                             <th scope="row">{{ $index + 1 }}</th>
-                                            <td>{{ $student->name }}</td>
-                                            <td><a href="/profile/{{ $student->email }}">{{ $student->email }}</a></td>
+                                            <td>{{ $data->name }}</td>
+                                            <td>
+                                                <a href="/profile/{{ $data->email }}">{{ $data->email }}</a>
+                                            </td>
                                             <td>
                                                 <form action="{{ route('admin.user.destroy') }}" method="POST"
                                                     onsubmit="return confirm('Do you really want to Delete this Counselor?');">
                                                     @csrf
-                                                    <input type="hidden" name="email" value="{{ $student->email }}">
+                                                    <input type="hidden" name="email" value="{{ $data->email }}">
                                                     <button class="btn btn-warning">Delete</button>
                                                 </form>
                                             </td>
@@ -44,7 +46,6 @@
                         </div>
                     </div>
                 </div>
-
             </div>
         </div>
     </div>

@@ -3,7 +3,7 @@
         <div class="col">
             <nav class="navbar navbar-expand-lg navbar-light" style="background-color: #e3f2fd;">
                 <div class="container">
-                    <a class="navbar-brand" href="#">SSM</a>
+                    <a class="navbar-brand" href="/">SSM</a>
                     <button class="navbar-toggler" type="button" data-toggle="collapse"
                         data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
                         aria-expanded="false" aria-label="Toggle navigation">
@@ -45,14 +45,18 @@
 
                                 @if ($role == 'admin')
                                     <li class="nav-item">
-                                        <a class="nav-link" href="/appointments">Appointments </a>
+                                        <a class="nav-link" href="/admin/appointments">Appointments</a>
                                     </li>
                                     <li class="nav-item">
-                                        <a class="nav-link" href="/admin/counselors">Counselors</a>
+                                        <a class="nav-link" href="/admin/advisors">Advisors</a>
                                     </li>
 
                                     <li class="nav-item">
-                                        <a class="nav-link" href="/admin/counselor">Create Counselor</a>
+                                        <a class="nav-link" href="/admin/advisor">Create Advisor</a>
+                                    </li>
+
+                                    <li class="nav-item">
+                                        <a class="nav-link" href="/admin/students">Students</a>
                                     </li>
 
                                 @endif
@@ -65,6 +69,8 @@
 
                                     <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
                                         <a href="/dashboard" class="dropdown-item">Dashboard</a>
+                                        <a href="/profile" class="dropdown-item">Profile</a>
+                                        <a href="/change-password" class="dropdown-item">Change Password</a>
                                         <a class="dropdown-item" href="{{ route('logout') }}"
                                             onclick="event.preventDefault();document.getElementById('logout-form').submit();">
                                             {{ __('Logout') }}

@@ -21,6 +21,7 @@ class User extends Authenticatable
     protected $fillable = [
         'name',
         'email',
+        'phone',
         'password',
         'role_id',
     ];
@@ -44,19 +45,31 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
     ];
 
-    public function role(){
+    public function role()
+    {
         return $this->hasOne(Role::class, 'id', 'role_id');
     }
 
-    public function studentReminder(){
-        return $this->hasMany(Reminder::class, 'student_id','id');
-     }
+    public function studentReminder()
+    {
+        return $this->hasMany(Reminder::class, 'student_id', 'id');
+    }
 
-     public function advisorReminder(){
-        return $this->hasMany(Reminder::class, 'advisor_id','id');
-     }
+    public function advisorReminder()
+    {
+        return $this->hasMany(Reminder::class, 'advisor_id', 'id');
+    }
 
-     public function advisor(){
-        return $this->hasMany(Advisor::class, 'user_id','id');
-     }
+    public function advisor()
+    {
+        return $this->hasMany(Advisor::class, 'user_id', 'id');
+    }
+
+    /**
+     * Get the user's image.
+     */
+    public function image()
+    {
+        return $this->morphOne(Image::class, 'imageable');
+    }
 }

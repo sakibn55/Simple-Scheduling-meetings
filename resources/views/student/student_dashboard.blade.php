@@ -1,21 +1,16 @@
 @extends('app')
-
+@section('title') Adivsors @endsection
 @section('content')
     <div class="container">
         <div class="row">
-            <div class="col">
-                <div class="card mt-5 mr-auto ml-auto">
+            <div class="col-sm-8 m-auto">
+                <div class="card border-info mt-5 mr-auto ml-auto">
+                    <div class="card-header bg-info">
+                        <h2>Select an Advisor to make an Appointment</h2>
+                    </div>
                     <div class="card-body">
-                        <h5 class="card-title">Advisors</h5>
                         <div class="table-responsive">
-                            <table class="table">
-                                <thead class="thead-dark">
-                                    <tr>
-                                        <th scope="col">#</th>
-                                        <th scope="col">Advisor</th>
-                                        <th scope="col">Action</th>
-                                    </tr>
-                                </thead>
+                            <table class="table table-sm">
                                 <tbody>
                                     @foreach ($data as $index => $item)
 

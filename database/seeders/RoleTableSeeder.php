@@ -18,10 +18,6 @@ class RoleTableSeeder extends Seeder
         $student->title = 'student';
         $student->save();
 
-        $counselors = new Role();
-        $counselors->title = 'counselors';
-        $counselors->save();
-
         $advisor = new Role();
         $advisor->title = 'advisor';
         $advisor->save();

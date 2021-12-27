@@ -3,8 +3,8 @@
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\AdvisorController;
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\MyAppointmentsController;
 use App\Http\Controllers\StudentController;
+use App\Http\Controllers\UserController;
 
 /*
 |--------------------------------------------------------------------------
@@ -21,6 +21,11 @@ Route::get('/', function () {
     return redirect()->route('login');
 });
 
+Route::get('/profile', [UserController::class, 'index'])->name('profile');
+Route::get('/profile/{email}', [UserController::class, 'view']);
+Route::post('/profile', [UserController::class, 'update'])->name('user.profile.save');
+Route::post('/change-password', [UserController::class, 'changePassword'])->name('password.change');
+Route::get('/change-password', [UserController::class, 'password']);
 Route::get('/dashboard', function () {
     $role = auth()->user()->role->title;
     switch ($role) {
@@ -40,12 +45,13 @@ require __DIR__ . '/auth.php';
 
 Route::resource('reminder', 'App\Http\Controllers\ReminderController');
 
-Route::get('/appointments', [MyAppointmentsController::class, 'index'])->name('admin.appointments');
+Route::get('/admin/appointments', [AdminController::class, 'index'])->name('admin.appointments');
 
 //admin controller
-Route::get('/admin/counselors', [AdminController::class, 'getCounselors'])->name('admin.counselors');
-Route::get('/admin/counselor', [AdminController::class, 'createCounselor']);
-Route::post('/admin/add/counselor', [AdminController::class, 'addCounselors'])->name('admin.counselor.add');
+Route::get('/admin/advisors', [AdminController::class, 'getAdvisor'])->name('admin.advisors');
+Route::get('/admin/appointment/{slug}', [AdminController::class, 'viewAppointment']);
+Route::get('/admin/advisor', [AdminController::class, 'createAdvisor']);
+Route::post('/admin/add/advisor', [AdminController::class, 'addAdvisor'])->name('admin.advisor.add');
 Route::post('/admin/delete/user', [AdminController::class, 'destroyUser'])->name('admin.user.destroy');
 
 //admin student
@@ -61,10 +67,12 @@ Route::post('/advisor/update', [AdvisorController::class, 'update'])->name('advi
 Route::post('/advisor/delete', [AdvisorController::class, 'destroy'])->name('advisor.destroy');
 
 Route::post('/advisor/confirmation', [AdvisorController::class, 'confirmation'])->name('advisor.confirmation');
+Route::get('/advisor/appointment/{slug}', [AdvisorController::class, 'viewAppointment']);
 
 
 //student controller
 Route::get('/student', [StudentController::class, 'index'])->name('student.index');
+Route::get('/appointment/{slug}', [StudentController::class, 'viewAppointment']);
 Route::get('/student/reminders', [StudentController::class, 'myReminders'])->name('student.myReminders');
 
 //get advisor avaibilities

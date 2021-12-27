@@ -2,8 +2,9 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Advisor;
 use App\Models\User;
+use App\Models\Advisor;
+use App\Models\Reminder;
 use Illuminate\Http\Request;
 
 class StudentController extends Controller
@@ -18,7 +19,7 @@ class StudentController extends Controller
     }
     public function myReminders()
     {
-        $reminders = auth()->user()->studentReminder()->with('advisor')->get();
+        $reminders = auth()->user()->studentReminder()->with('advisor')->orderByDesc('start')->get();
         return view('student.student_reminders', compact('reminders'));
     }
 
@@ -29,5 +30,14 @@ class StudentController extends Controller
             $datas = User::where('email', $advisor_email)->with(['advisorReminder', 'advisor'])->first();
             return response()->json($datas);
         }
+    }
+
+    public function viewAppointment($slug)
+    {
+        $data = Reminder::where('slug', $slug)->first();
+        return view(
+            'student.reminder_view',
+            compact('data')
+        );
     }
 }

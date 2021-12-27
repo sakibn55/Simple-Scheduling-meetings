@@ -13,6 +13,10 @@ use Illuminate\Contracts\Support\ValidatedData;
 
 class ReminderController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('auth');
+    }
 
     protected function validateData(Request $request)
     {
@@ -22,7 +26,6 @@ class ReminderController extends Controller
             'location_title' => 'required|max:255',
             'lattitude' => 'max:20',
             'longitude' => 'max:20',
-            'range' => 'required|integer',
             'start' => 'required|date|max:255',
             'end' => 'required|date|max:255',
             'advisor_email' => 'required|email',
@@ -37,7 +40,6 @@ class ReminderController extends Controller
             'location_title' => 'required|max:255',
             'lattitude' => 'max:20',
             'longitude' => 'max:20',
-            'range' => 'required|integer',
         ]);
     }
     /**
@@ -47,7 +49,6 @@ class ReminderController extends Controller
      */
     public function index(Request $request)
     {
-
         $advisors = User::whereHas('role', function ($query) {
             $query->where('title', 'advisor');
         })->get();
@@ -58,6 +59,9 @@ class ReminderController extends Controller
             if (isset($request->advisor_email) && $request->advisor_email != null) {
                 $advisor_email = $request->advisor_email;
                 $advisor = User::where('email', $advisor_email)->first();
+                if ($advisor == null) {
+                    return redirect()->route('dashboard')->with('errors', 'No Advisor Found!');
+                }
                 $advisor_avaibility = $advisor->advisor()->get();
 
                 $data = $advisor_avaibility->map(function ($d) {
@@ -142,7 +146,6 @@ class ReminderController extends Controller
             $reminder->location_title = $request->location_title;
             $reminder->lattitude = $request->lattitude;
             $reminder->longitude = $request->longitude;
-            $reminder->range = $request->range;
             $reminder->start = $request->start;
             $reminder->end = $request->end;
             $reminder->student_id = auth()->user()->id;
@@ -150,9 +153,9 @@ class ReminderController extends Controller
             $reminder->save();
             return redirect()->back()->with('success', 'Successfully Saved your appointment');
         } catch (PDOException $e) {
-            return redirect()->back()->with('error', $e->getMessage());
+            return redirect()->back()->with('errors', $e->getMessage());
         } catch (\Throwable $th) {
-            return redirect()->back()->with('error', $th->getMessage());
+            return redirect()->back()->with('errors', $th->getMessage());
         }
     }
 
@@ -215,13 +218,12 @@ class ReminderController extends Controller
             $reminder->location_title = $request->location_title;
             $reminder->lattitude = $request->lattitude;
             $reminder->longitude = $request->longitude;
-            $reminder->range = $request->range;
             $reminder->update();
             return redirect()->back()->with('success', 'Sucessfully updated reminder');
         } catch (\Throwable $th) {
-            return redirect()->back()->with('error', $th->getMessage());
+            return redirect()->back()->with('errors', $th->getMessage());
         } catch (PDOException $e) {
-            return redirect()->back()->with('error', $e->getMessage());
+            return redirect()->back()->with('errors', $e->getMessage());
         }
     }
 
@@ -236,11 +238,11 @@ class ReminderController extends Controller
         $reminder = Reminder::where('slug', $reminder->slug)->first();
         try {
             $reminder->delete();
-            return redirect()->back()->with('success', 'Suceesfully Canceled Your Appointment');
+            return redirect()->route('dashboard')->with('success', 'Suceesfully Delete!');
         } catch (\Throwable $th) {
-            return redirect()->back()->with('error', $th->getMessage());
+            return redirect()->back()->with('errors', $th->getMessage());
         } catch (PDOException $e) {
-            return redirect()->back()->with('error', $e->getMessage());
+            return redirect()->back()->with('errors', $e->getMessage());
         }
 
         return redirect()->back()->with('info', 'Something went wrong! please try again.');

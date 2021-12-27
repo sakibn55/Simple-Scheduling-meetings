@@ -6,7 +6,7 @@ use Closure;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 
-class CounselorMiddleware
+class AdvisorMiddleware
 {
     /**
      * Handle an incoming request.
@@ -17,7 +17,7 @@ class CounselorMiddleware
      */
     public function handle(Request $request, Closure $next)
     {
-        if(auth()->user()->role->title != 'counselor'){
+        if (auth()->user()->role->title != 'advisor') {
             abort(Response::HTTP_FORBIDDEN);
         }
         return $next($request);

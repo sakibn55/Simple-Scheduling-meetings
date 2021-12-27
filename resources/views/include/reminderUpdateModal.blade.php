@@ -30,33 +30,10 @@
                             placeholder="Enter Location Title" required>
                     </div>
 
-                    <div class="form-group">
-                        <label for="lattitude">Location lattitude</label>
-                        <input type="text" class="form-control" id="lattitudeUpdate" name="lattitude"
-                            placeholder="Enter Location lattitude" required>
-                    </div>
+                    <div id="map_update"></div>
 
-                    <div class="form-group">
-                        <label for="longitude">Location longitude</label>
-                        <input type="text" class="form-control" id="longitudeUpdate" name="longitude"
-                            placeholder="Enter Location longitude" required>
-                    </div>
-
-                    <div class="form-group">
-                        <label for="range">Location range</label>
-                        <input type="text" class="form-control" id="rangeUpdate" name="range"
-                            placeholder="Enter Location range" required>
-                    </div>
-
-                    {{-- <div class="form-group">
-                    <label for="start">Start</label>
-                    <input type="text" class="form-control datetimepicker" id="startUpdate" name="start"  required>
-                </div>
-
-                <div class="form-group">
-                    <label for="end">End</label>
-                    <input type="text" class="form-control datetimepicker" id="endUpdate" name="end"  required>
-                </div> --}}
+                    <input type="hidden" class="form-control" id="lattitudeUpdate" name="lattitude">
+                    <input type="hidden" class="form-control" id="longitudeUpdate" name="longitude">
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>

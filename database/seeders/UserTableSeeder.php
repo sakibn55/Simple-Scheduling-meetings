@@ -39,8 +39,8 @@ class UserTableSeeder extends Seeder
 
         $student_role = Role::where('title', 'student')->first();
         $student = new User();
-        $student->name = 'student';
-        $student->email = 'student@gmail.com';
+        $student->name = 'Nazmus Sakib';
+        $student->email = 'sakibn55@gmail.com';
         $student->role_id = $student_role->id;
         $student->email_verified_at = date("Y-m-d H:i:s");
         $student->password = bcrypt('12345678');

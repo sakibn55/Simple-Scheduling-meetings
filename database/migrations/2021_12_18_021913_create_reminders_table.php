@@ -22,7 +22,6 @@ class CreateRemindersTable extends Migration
             $table->string('lattitude')->nullable();
             $table->string('longitude')->nullable();
             $table->boolean('status')->default(0);
-            $table->integer('range');
             $table->dateTime('start');
             $table->dateTime('end');
             $table->unsignedInteger('student_id');

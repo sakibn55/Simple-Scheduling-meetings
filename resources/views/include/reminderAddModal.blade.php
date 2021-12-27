@@ -25,33 +25,18 @@
                         <textarea class="form-control" id="description" name="description" rows="3"
                             required></textarea>
                     </div>
-
                     <div class="form-group">
                         <label for="location_title">Location Title</label>
                         <input type="text" class="form-control" id="location_title" name="location_title"
                             placeholder="Enter Location Title" required>
                     </div>
+                    <div id="map"></div>
 
-                    <div class="form-group">
-                        <label for="lattitude">Location lattitude</label>
-                        <input type="text" class="form-control" id="lattitude" name="lattitude"
-                            placeholder="Enter Location lattitude" required>
-                    </div>
-
-                    <div class="form-group">
-                        <label for="longitude">Location longitude</label>
-                        <input type="text" class="form-control" id="longitude" name="longitude"
-                            placeholder="Enter Location longitude" required>
-                    </div>
-
-                    <div class="form-group">
-                        <label for="range">Location range</label>
-                        <input type="text" class="form-control" id="range" name="range"
-                            placeholder="Enter Location range" required>
-                    </div>
-
+                    {{-- hidden fields will autocomplete --}}
+                    <input type="hidden" class="form-control" id="lattitude" name="lattitude" value="45.580467">
+                    <input type="hidden" class="form-control" id="longitude" name="longitude" value="-73.705079">
                     <input type='hidden' class="form-control" id="end" name="end" />
-                    <input type="hidden" class="form-control" id="start" name="start" required>
+                    <input type="hidden" class="form-control" id="start" name="start">
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>

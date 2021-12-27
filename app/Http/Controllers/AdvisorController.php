@@ -9,39 +9,46 @@ use Illuminate\Http\Request;
 
 class AdvisorController extends Controller
 {
-    protected function validateData(Request $request){
+    public function __construct()
+    {
+        $this->middleware(['auth', 'advisor']);
+    }
+    protected function validateData(Request $request)
+    {
         $request->validate([
             'start' => 'required|date|max:255',
             'end' => 'required|date|max:255',
         ]);
     }
-    public function myReminders(){
-        $reminders = auth()->user()->advisorReminder()->with('student')->get();
-        return view('advisor.advisor_reminder',compact('reminders'));
+    public function myReminders()
+    {
+        $reminders = auth()->user()->advisorReminder()->with('student')->orderByDesc('start')->get();
+        return view('advisor.advisor_reminder', compact('reminders'));
     }
 
-    public function getAvaibility(Request $request){
-        if($request->ajax())
-    	{
+    public function getAvaibility(Request $request)
+    {
+        if ($request->ajax()) {
             $data = auth()->user()->advisor()->whereDate('start', '>=', $request->start)
-            ->whereDate('end',   '<=', $request->end)
-            ->get(['id', 'start', 'end']);
+                ->whereDate('end',   '<=', $request->end)
+                ->get(['id', 'start', 'end']);
 
-            $data= $data->map(function($d)
-            {
+            $data = $data->map(function ($d) {
                 $d['overlap'] = false;
                 return $d;
             });
 
             return response()->json($data);
-    	}
-    	return view('advisor.advisor_calender');
-    }
-    public function avaibilityCalendar(){
+        }
         return view('advisor.advisor_calender');
     }
-    public function store(Request $request){
-        if($request->ajax()){
+    public function avaibilityCalendar()
+    {
+        return view('advisor.advisor_calender');
+    }
+    public function store(Request $request)
+    {
+        if ($request->ajax()) {
             $this->validateData($request);
             try {
                 $advisor = new Advisor();
@@ -52,16 +59,15 @@ class AdvisorController extends Controller
                 return response()->json($advisor, 200);
             } catch (\Throwable $th) {
                 return response()->json($th->getMessage(), 500);
-
-            }
-            catch(PDOException $e){
+            } catch (PDOException $e) {
                 return response()->json($e->getMessage(), 404);
             }
         }
     }
 
-    public function update(Request $request){
-        if($request->ajax()){
+    public function update(Request $request)
+    {
+        if ($request->ajax()) {
             $this->validateData($request);
             try {
                 $advisor = Advisor::findOrFail($request->id);
@@ -71,46 +77,51 @@ class AdvisorController extends Controller
                 return response()->json($advisor, 200);
             } catch (\Throwable $th) {
                 return response()->json($th->getMessage(), 500);
-
-            }
-            catch(PDOException $e){
+            } catch (PDOException $e) {
                 return response()->json($e->getMessage(), 404);
             }
         }
     }
 
-    public function destroy(Request $request){
-        if($request->ajax()){
+    public function destroy(Request $request)
+    {
+        if ($request->ajax()) {
             try {
                 $advisor = Advisor::findOrFail($request->id);
                 $advisor->delete();
                 return response()->json(null, 200);
             } catch (\Throwable $th) {
                 return response()->json($th->getMessage(), 500);
-
-            }
-            catch(PDOException $e){
+            } catch (PDOException $e) {
                 return response()->json($e->getMessage(), 404);
             }
         }
     }
 
-    public function confirmation(Request $reminder){
+    public function confirmation(Request $reminder)
+    {
         try {
-            $reminder = Reminder::where('slug',$reminder->slug)->first();
-            if($reminder->status){
+            $reminder = Reminder::where('slug', $reminder->slug)->first();
+            if ($reminder->status) {
                 $reminder->status = 0;
-            }else{
+            } else {
                 $reminder->status = 1;
             }
             $reminder->update();
-            return redirect()->back()->with('success','Successfully Confirmed');
+            return redirect()->back()->with('success', 'Successfully Updated');
         } catch (\Throwable $th) {
-            return redirect()->back()->with('error',$th->getMessage());
+            return redirect()->back()->with('errors', $th->getMessage());
+        } catch (PDOException $e) {
+            return redirect()->back()->with('errors', $e->getMessage());
+        }
+    }
 
-        }
-        catch(PDOException $e){
-            return redirect()->back()->with('error',$e->getMessage());
-        }
+    public function viewAppointment($slug)
+    {
+        $data = Reminder::where('slug', $slug)->first();
+        return view(
+            'advisor.reminder_view',
+            compact('data')
+        );
     }
 }
