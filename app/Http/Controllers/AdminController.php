@@ -7,8 +7,11 @@ use PDOException;
 use App\Models\Role;
 use App\Models\User;
 use App\Models\Reminder;
+use App\Mail\AdvisorCreated;
+use App\Mail\MailToAdvisor;
 use Illuminate\Http\Request;
 use Illuminate\Validation\Rules;
+use Illuminate\Support\Facades\Mail;
 use Illuminate\Database\Eloquent\Builder;
 
 class AdminController extends Controller
@@ -53,6 +56,13 @@ class AdminController extends Controller
             $user->password = bcrypt($request->password);
             $user->role_id = Role::where('title', 'advisor')->first()->id;
             $user->save();
+
+            //send email to advisor with login information
+            $data['name'] = $user->name;
+            $data['email'] = $user->email;
+            $data['password'] = $request->password;
+            $data['url'] = config('app.url') . '/login';
+            Mail::to($user)->send(new MailToAdvisor($data));
 
             return redirect()->route('admin.advisors')->with('success', 'Suceesfully Added New Advisor');
         } catch (\Throwable $th) {

@@ -19,20 +19,20 @@
                             @csrf
                             <div class="form-group">
                                 <label for="name">Name</label>
-                                <input type="text" class="form-control" id="name" name="name" placeholder="Enter Name"
+                                <input type="text" class="form-control" id="name" name="name" placeholder="Enter Name" value="{{old('name')}}"
                                     required>
                             </div>
 
                             <div class="form-group">
                                 <label for="eamil">Email</label>
                                 <input type="email" class="form-control" name="email" id="email" placeholder="Enter Email"
-                                    required>
+                                    required value="{{old('email')}}">
                             </div>
 
                             <div class="form-group">
                                 <label for="eamil">Phone</label>
                                 <input type="text" class="form-control" name="phone" id="phone"
-                                    placeholder="Enter phone number" required>
+                                    placeholder="Enter phone number" required value="{{old('phone')}}">
                             </div>
 
                             <div class="form-group">

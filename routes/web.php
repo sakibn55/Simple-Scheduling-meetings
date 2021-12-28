@@ -5,6 +5,8 @@ use App\Http\Controllers\AdvisorController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\StudentController;
 use App\Http\Controllers\UserController;
+use App\Mail\AdvisorCreated;
+use Illuminate\Support\Facades\Mail;
 
 /*
 |--------------------------------------------------------------------------

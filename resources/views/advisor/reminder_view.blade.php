@@ -32,7 +32,11 @@
                         <p>
                             <strong>Location title: </strong>{{ $data->location_title }}
                         </p>
+                        <p><a target="_blank"
+                                href="https://www.google.ca/maps/place/{{ $data->lattitude }},{{ $data->longitude }}">Find
+                                In Google Map</a></p>
                         <p>
+
                         <div id="map"></div>
                         </p>
                         <p>

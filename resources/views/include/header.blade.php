@@ -1,7 +1,7 @@
-<div class="container-fluid">
+<div class="container-fluid" style="background-color: #e3f2fd;">
     <div class="row">
         <div class="col">
-            <nav class="navbar navbar-expand-lg navbar-light" style="background-color: #e3f2fd;">
+            <nav class="navbar navbar-expand-lg navbar-light" >
                 <div class="container">
                     <a class="navbar-brand" href="/">SSM</a>
                     <button class="navbar-toggler" type="button" data-toggle="collapse"

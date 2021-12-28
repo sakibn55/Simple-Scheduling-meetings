@@ -18,20 +18,28 @@
                         </p>
 
                         <p>
-                            <strong>Start: </strong>{{ $data->start }} <br>
+                            <strong>Start Time: </strong>{{ $data->start }} <br>
                             <span class="text-info">
                                 {{ \Carbon\Carbon::parse($data->start)->diffForHumans() }}
                             </span>
                         </p>
+
                         <p>
-                            <strong>End: </strong>{{ $data->end }} <br>
+                            <strong>End Time: </strong>{{ $data->end }} <br>
                             <span class="text-info">
                                 {{ \Carbon\Carbon::parse($data->end)->diffForHumans() }}
                             </span>
                         </p>
                         <p>
-                            <strong>Location title: </strong>{{ $data->location_title }}
+                            <strong>Location Title: </strong>{{ $data->location_title }}
                         </p>
+                        <p>
+                            <strong>Location Lontitude: </strong>{{ $data->longitude }}
+                        </p>
+                        <p>
+                            <strong>Location Lattitude: </strong>{{ $data->lattitude }}
+                        </p>
+                        <p><a target="_blank" href="https://www.google.ca/maps/place/{{$data->lattitude}},{{$data->longitude}}">Find In Google Map</a></p>
                         <p>
                         <div id="map"></div>
                         </p>

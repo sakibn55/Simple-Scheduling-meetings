@@ -11,19 +11,18 @@
 
                     <div class="card-body">
                         <div class="table-responsive">
-                            <table class="table">
+                            <table id="example" class="table display">
                                 <thead class="thead-dark">
                                     <tr>
                                         <th scope="col">#</th>
                                         <th scope="col">Title</th>
                                         <th scope="col">Student</th>
                                         <th scope="col">Status</th>
-                                        <th scope="col" colspan="2">Action</th>
+                                        <th scope="col">Action</th>
                                     </tr>
                                 </thead>
                                 <tbody>
                                     @foreach ($reminders as $index => $item)
-
                                         <tr>
                                             <th scope="row">{{ $index + 1 }}</th>
                                             <td>{{ $item->title }}</td>
@@ -42,8 +41,7 @@
                                             </td>
                                             <td><a href="/advisor/appointment/{{ $item->slug }}"
                                                     class="btn btn-info">View</a>
-                                            <td>
-                                                <form action="/advisor/confirmation" method="POST">
+                                                    <form action="/advisor/confirmation" method="POST">
                                                     @csrf
                                                     <input type="hidden" name="slug" value="{{ $item->slug }}">
                                                     @if ($item->status)
@@ -64,4 +62,11 @@
             </div>
         </div>
     </div>
+@endsection
+@section('script')
+<script>
+$(document).ready(function() {
+    $('#example').DataTable();
+});
+</script>
 @endsection

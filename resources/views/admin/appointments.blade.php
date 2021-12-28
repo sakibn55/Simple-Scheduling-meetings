@@ -2,6 +2,7 @@
 @section('title')
     Appointments
 @endsection
+
 @section('content')
     <div class="container">
         <div class="row">
@@ -12,22 +13,22 @@
                     </div>
                     <div class="card-body">
                         <div class="table-responsive">
-                            <table class="table">
+                            <table id="example" class="table display" >
                                 <thead class="thead-dark">
                                     <tr>
-                                        <th scope="col">#</th>
-                                        <th scope="col">Title</th>
-                                        <th scope="col">Advisor</th>
-                                        <th scope="col">Student</th>
-                                        <th scope="col">Confirmed</th>
-                                        <th scope="col" colspan="2">Action</th>
+                                        <th>#</th>
+                                        <th>Title</th>
+                                        <th>Advisor</th>
+                                        <th>Student</th>
+                                        <th>Confirmed</th>
+                                        <th>Action</th>
                                     </tr>
                                 </thead>
                                 <tbody>
                                     @foreach ($reminders as $index => $reminder)
 
                                         <tr>
-                                            <th scope="row">{{ $index + 1 }}</th>
+                                            <td>{{ $index + 1 }}</td>
                                             <td>{{ $reminder->title }}</td>
                                             <td>
                                                 <a
@@ -51,13 +52,14 @@
                                             </td>
                                             <td><a href="/admin/appointment/{{ $reminder->slug }}"
                                                     class="btn btn-info">View</a>
-                                            <td>
-                                                <form action="{{ route('reminder.destroy', $reminder) }}" method="POST"
+
+                                                    <form action="{{ route('reminder.destroy', $reminder) }}" method="POST"
                                                     onsubmit="return confirm('Do you really want to Delete this Appointment?');">
                                                     @csrf
                                                     {{ method_field('DELETE') }}
                                                     <button class="btn btn-warning">Delete</button>
                                                 </form>
+
                                             </td>
                                         </tr>
                                     @endforeach
@@ -69,4 +71,13 @@
             </div>
         </div>
     </div>
+
+
+@endsection
+@section('script')
+<script>
+$(document).ready(function() {
+    $('#example').DataTable();
+});
+</script>
 @endsection
