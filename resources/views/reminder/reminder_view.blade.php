@@ -55,12 +55,12 @@
         const map = new mapboxgl.Map({
             container: 'map', // Container ID
             style: 'mapbox://styles/mapbox/streets-v11', // Map style to use
-            center: [-73.705079, 45.580467], // Starting position [lng, lat]
+            center: [-73.569496, 45.506392], // Starting position [lng, lat]
             zoom: 12, // Starting zoom level
         });
 
         const marker = new mapboxgl.Marker() // initialize a new marker
-            .setLngLat([-73.705079, 45.580467]) // Marker [lng, lat] coordinates
+            .setLngLat([-73.569496, 45.506392]) // Marker [lng, lat] coordinates
             .addTo(map);
 
         const geocoder = new MapboxGeocoder({

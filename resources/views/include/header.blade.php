@@ -1,7 +1,7 @@
 <div class="container-fluid" style="background-color: #e3f2fd;">
     <div class="row">
         <div class="col">
-            <nav class="navbar navbar-expand-lg navbar-light" >
+            <nav class="navbar navbar-expand-lg navbar-light">
                 <div class="container">
                     <a class="navbar-brand" href="/">SSM</a>
                     <button class="navbar-toggler" type="button" data-toggle="collapse"
@@ -31,6 +31,32 @@
                                     <li class="nav-item">
                                         <a class="nav-link" href="/student/reminders">My Appointments</a>
                                     </li>
+                                    <div class="nav-item dropdown">
+                                    <a id="navbarDropdown" class="nav-link btn btn-navbar dropdown-toggle " href="#"
+                                        role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"
+                                        v-pre>
+                                        Notifications <span class="countNotification caret badge badge-danger">{{count(auth()->user()->unreadNotifications)}}</span>
+                                    </a>
+                                    <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
+                                        @if (count(auth()->user()->unreadNotifications) > 0)
+                                            @foreach (auth()->user()->unreadNotifications as $item)
+                                            <div data-slug='{{ $item->data['appointment_id'] }}' notification-id = '{{$item->id}}'  class="dropdown-item alert alert-warning alert-dismissible fade show myAlert" role="alert">
+                                                <span notification-id = '{{$item->id}}'  data-slug='{{ $item->data['appointment_id'] }}' class="myAlertSTDMessage">{{ $item->data['message'] }}</span>
+                                                <button  type="button" class="close" data-dismiss="alert"
+                                                    aria-label="Close">
+                                                    <span aria-hidden="true">&times;</span>
+                                                </button>
+                                            </div>
+
+                                            @endforeach
+                                            @else
+                                            <span class="dropdown-item">
+                                                No new Notifications
+                                            </span>
+                                        @endif
+
+                                    </div>
+                                </div>
 
                                 @endif
 
@@ -41,6 +67,34 @@
                                     <li class="nav-item">
                                         <a class="nav-link" href="/advisor/reminder">Appointments</a>
                                     </li>
+                                    <div class="nav-item dropdown">
+                                    <a id="navbarDropdown" class="nav-link btn btn-navbar dropdown-toggle " href="#"
+                                        role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"
+                                        v-pre>
+                                        Notifications <span class="countNotification caret badge badge-danger">{{count(auth()->user()->unreadNotifications)}}</span>
+                                    </a>
+                                    <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
+                                        @if (count(auth()->user()->unreadNotifications) > 0)
+                                            @foreach (auth()->user()->unreadNotifications as $item)
+                                            <div data-slug='{{ $item->data['appointment_id'] }}' notification-id = '{{$item->id}}'  class="dropdown-item alert alert-warning alert-dismissible fade show myAlert" role="alert">
+                                                <span notification-id = '{{$item->id}}'  data-slug='{{ $item->data['appointment_id'] }}' class="myAlertMessage">{{ $item->data['message'] }}</span>
+                                                <button  type="button" class="close" data-dismiss="alert"
+                                                    aria-label="Close">
+                                                    <span aria-hidden="true">&times;</span>
+                                                </button>
+                                            </div>
+
+                                            @endforeach
+                                            @else
+                                            <span class="dropdown-item">
+                                                No new Notifications
+                                            </span>
+                                        @endif
+
+                                    </div>
+
+
+                                </div>
                                 @endif
 
                                 @if ($role == 'admin')
@@ -60,6 +114,7 @@
                                     </li>
 
                                 @endif
+
                                 <div class="nav-item dropdown">
                                     <a id="navbarDropdown" class="nav-link btn btn-navbar dropdown-toggle " href="#"
                                         role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"

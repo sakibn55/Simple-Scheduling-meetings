@@ -73,4 +73,32 @@ class UserController extends Controller
         }
         return view('profile_view', compact('data'));
     }
+
+    public function notification_read(Request $request)
+    {
+        if ($request->ajax()) {
+            try {
+                $notifcation = auth()->user()->notifications()->where('id', $request->id);
+                $notifcation->update(['read_at' => now()]);
+                return response()->json(null, 200);
+            } catch (\Throwable $th) {
+                return response()->json($th, 404);
+            } catch (PDOException $e) {
+                return response()->json($e, 500);
+            }
+        }
+    }
+
+    public function notification_count(Request $request){
+        if ($request->ajax()) {
+            try {
+                $notifcation = auth()->user()->unreadNotifications()->count();
+                return response()->json($notifcation, 200);
+            } catch (\Throwable $th) {
+                return response()->json($th, 404);
+            } catch (PDOException $e) {
+                return response()->json($e, 500);
+            }
+        }
+    }
 }

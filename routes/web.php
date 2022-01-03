@@ -80,3 +80,8 @@ Route::get('/student/reminders', [StudentController::class, 'myReminders'])->nam
 //get advisor avaibilities
 
 Route::get('/advisor/avaibility/{advisor_email}', [StudentController::class, 'advisorAvaibility'])->name('student.advisorAvaibility');
+
+
+//notification read
+Route::post('/notification/read', [UserController::class, 'notification_read']);
+Route::get('/notifications', [UserController::class, 'notification_count']);

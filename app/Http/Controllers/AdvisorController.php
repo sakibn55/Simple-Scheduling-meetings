@@ -6,6 +6,7 @@ use PDOException;
 use App\Models\Advisor;
 use App\Models\Reminder;
 use Illuminate\Http\Request;
+use App\Notifications\Appointments;
 
 class AdvisorController extends Controller
 {
@@ -23,6 +24,7 @@ class AdvisorController extends Controller
     public function myReminders()
     {
         $reminders = auth()->user()->advisorReminder()->with('student')->orderByDesc('start')->get();
+
         return view('advisor.advisor_reminder', compact('reminders'));
     }
 
@@ -101,13 +103,19 @@ class AdvisorController extends Controller
     public function confirmation(Request $reminder)
     {
         try {
-            $reminder = Reminder::where('slug', $reminder->slug)->first();
-            if ($reminder->status) {
-                $reminder->status = 0;
+            $reminderData = Reminder::where('slug', $reminder->slug)->first();
+            if ($reminderData->status) {
+                $reminderData->status = 0;
+                $notification['message'] = 'Your Appointment Denied';
             } else {
-                $reminder->status = 1;
+                $reminderData->status = 1;
+                $notification['message'] = 'Your Appointment Confirmed';
             }
-            $reminder->update();
+            $reminderData->update();
+            //send notification
+            $notification['appointment_id'] = $reminderData->slug;
+            $reminderData->student->notify(new Appointments($notification));
+
             return redirect()->back()->with('success', 'Successfully Updated');
         } catch (\Throwable $th) {
             return redirect()->back()->with('errors', $th->getMessage());

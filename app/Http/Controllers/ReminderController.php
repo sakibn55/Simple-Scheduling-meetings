@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use PDOException;
 use App\Models\User;
 use App\Models\Reminder;
+use App\Notifications\Appointments;
 use Illuminate\Support\Str;
 
 use Illuminate\Http\Request;
@@ -139,7 +140,7 @@ class ReminderController extends Controller
         $this->validateData($request);
 
         try {
-            $advisor = User::where('email', $request->advisor_email)->first()->id;
+            $advisor = User::where('email', $request->advisor_email)->first();
             $reminder = new Reminder();
             $reminder->title = $request->title;
             $reminder->description = $request->description;
@@ -149,8 +150,14 @@ class ReminderController extends Controller
             $reminder->start = $request->start;
             $reminder->end = $request->end;
             $reminder->student_id = auth()->user()->id;
-            $reminder->advisor_id = $advisor;
+            $reminder->advisor_id = $advisor->id;
             $reminder->save();
+
+            //send notification
+            $notification['message'] = 'New Appointment Placed';
+            $notification['appointment_id'] = $reminder->slug;
+            $advisor->notify(new Appointments($notification));
+
             return redirect()->back()->with('success', 'Successfully Saved your appointment');
         } catch (PDOException $e) {
             return redirect()->back()->with('errors', $e->getMessage());
@@ -201,6 +208,10 @@ class ReminderController extends Controller
                 $reminder->start = $request->start;
                 $reminder->end = $request->end;
                 $reminder->update();
+                //send notification
+                $notification['message'] = 'Appointment Updated';
+                $notification['appointment_id'] = $reminder->slug;
+                $reminder->advisor->notify(new Appointments($notification));
                 return response()->json($reminder, 200);
             } catch (\Throwable $th) {
                 return response()->json($th, 404);
@@ -219,7 +230,11 @@ class ReminderController extends Controller
             $reminder->lattitude = $request->lattitude;
             $reminder->longitude = $request->longitude;
             $reminder->update();
-            return redirect()->back()->with('success', 'Sucessfully updated reminder');
+            //send notification
+            $notification['message'] = 'Appointment Updated';
+            $notification['appointment_id'] = $reminder->slug;
+            $reminder->advisor->notify(new Appointments($notification));
+            return redirect()->back()->with('success', 'Sucessfully Updated Appointment');
         } catch (\Throwable $th) {
             return redirect()->back()->with('errors', $th->getMessage());
         } catch (PDOException $e) {

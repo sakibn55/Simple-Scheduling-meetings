@@ -1,5 +1,5 @@
 @extends('app')
-@section('title') Adivsors @endsection
+@section('title') {{auth()->user()->name}} @endsection
 @section('content')
     <div class="container">
         <div class="row">
