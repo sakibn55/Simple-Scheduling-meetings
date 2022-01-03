@@ -47,6 +47,17 @@
                                 <button class="btn btn-info">Not Confirmed</button>
                             @endif
                         </p>
+                        <div class="text-right">
+                        <form action="/advisor/confirmation" method="POST">
+                            @csrf
+                            <input type="hidden" name="slug" value="{{ $data->slug }}">
+                            @if ($data->status)
+                                <button class="btn btn-danger">Deny</button>
+                            @else
+                                <button class="btn btn-primary">Confirm</button>
+                            @endif
+                        </form>
+                        </div>
                     </div>
                 </div>
             </div>

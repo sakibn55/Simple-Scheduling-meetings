@@ -90,6 +90,7 @@ class AdminController extends Controller
             $user->studentReminder()->delete(); //delete all associated data
             $user->advisorReminder()->delete(); //delete all associated data
             $user->image()->delete(); //delete all associated data
+            $user->notifications()->delete();
             $user->delete(); //delete user
             return redirect()->back()->with('success', 'Suceesfully Deleted User');
         } catch (\Throwable $th) {

@@ -10,13 +10,21 @@
                     </div>
                     <div class="card-body">
                         <div class="table-responsive">
-                            <table class="table table-sm">
+                            <table id="example" class="table display" >
+                                <thead class="thead-dark">
+                                    <tr>
+                                        <th>#</th>
+                                        <th>Name</th>
+                                        <th>Email</th>
+                                        <th>Action</th>
+                                    </tr>
+                                </thead>
                                 <tbody>
                                     @foreach ($data as $index => $item)
-
                                         <tr>
                                             <th scope="row">{{ $index + 1 }}</th>
                                             <td>{{ $item->name }}</td>
+                                            <td>{{ $item->email }}</td>
                                             <td>
                                                 <form action="/reminder" class="form-inline mb-2" method="GET">
                                                     @csrf
@@ -37,4 +45,12 @@
             </div>
         </div>
     </div>
+@endsection
+
+@section('script')
+<script>
+$(document).ready(function() {
+    $('#example').DataTable();
+});
+</script>
 @endsection

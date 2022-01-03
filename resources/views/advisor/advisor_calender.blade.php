@@ -8,8 +8,8 @@
                 <div class="col">
                     <h1 class="text-center text-primary m-4">Add Available Times</h1>
 
-                    <div class="card bg-info">
-                        <div class="card-body">
+                    <div class="card border-info" style="background: red">
+                        <div class="card-body" id="reminderBook">
                             <div id="AdvisorCalendar"></div>
                         </div>
                     </div>

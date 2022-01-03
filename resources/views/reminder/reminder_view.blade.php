@@ -26,8 +26,8 @@
 
             <div class="row">
                 <div class="col">
-                    <div class="card border-info">
-                        <div class="card-body">
+                    <div class="card border-info" style="background: red">
+                        <div class="card-body" id="reminderBook">
                             <div id="calendar"></div>
                         </div>
                     </div>

@@ -37,6 +37,7 @@ class AdvisorController extends Controller
 
             $data = $data->map(function ($d) {
                 $d['overlap'] = false;
+                $d['className'] = 'bg-success text-white';
                 return $d;
             });
 

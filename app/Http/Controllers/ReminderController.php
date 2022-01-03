@@ -85,7 +85,7 @@ class ReminderController extends Controller
                     foreach ($students as $std) {
                         if (count($std->studentReminder) > 0) {
                             foreach ($std->studentReminder as $item) {
-                                $item->className = 'bg-danger text-white';
+                                $item->className = 'bg-danger red text-white';
                                 $item->rendering = 'background';
                                 $data[] = $item;
                             }

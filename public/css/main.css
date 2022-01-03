@@ -30,3 +30,12 @@ body {
 .myAlertSTDMessage {
     cursor: pointer;
 }
+
+#reminderBook .fc-bgevent {
+    opacity: 1;
+}
+
+.bg-danger.red.text-white.fc-bgevent {
+    background: red;
+    z-index: 9;
+}
