@@ -8,6 +8,7 @@ use App\Models\Image;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 use App\Rules\MatchOldPassword;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 
 class UserController extends Controller
@@ -99,6 +100,26 @@ class UserController extends Controller
             } catch (PDOException $e) {
                 return response()->json($e, 500);
             }
+        }
+    }
+    public function destroy(Request $request){
+        $user = User::findOrfail(auth()->user()->id);
+        $request->validate([
+            'password' => ['required', new MatchOldPassword],
+        ]);
+        Auth::logout();
+        try{
+            $user->advisor()->delete(); //delete all associated data
+            $user->studentReminder()->delete(); //delete all associated data
+            $user->advisorReminder()->delete(); //delete all associated data
+            $user->image()->delete(); //delete all associated data
+            $user->notifications()->delete();
+            $user->delete();
+            return redirect()->route('login')->with('success', 'Successfully Deleted Your Account');
+        } catch (\Throwable $th) {
+            return  redirect()->route('login')->with('danger', $th);
+        } catch (PDOException $e) {
+            return redirect()->route('login')->with('danger', $e);
         }
     }
 }

@@ -2,26 +2,26 @@
 
 //mail trap testing
 
-return [
-    "driver" => "smtp",
-    "host" => "smtp.mailtrap.io",
-    "port" => 2525,
-    "from" => array(
-        "address" => "infossm@gmail.com",
-        "name" => "Simple Scheduling"
-    ),
-    "username" => env('MAIL_USERNAME'),
-    "password" => env('MAIL_PASSWORD'),
-    "sendmail" => "/usr/sbin/sendmail -bs",
-    'encryption' => env('MAIL_ENCRYPTION', 'null'),
-    'markdown' => [
-        'theme' => 'default',
+// return [
+//     "driver" => "smtp",
+//     "host" => "smtp.mailtrap.io",
+//     "port" => 2525,
+//     "from" => array(
+//         "address" => "infossm@gmail.com",
+//         "name" => "Simple Scheduling"
+//     ),
+//     "username" => env('MAIL_USERNAME'),
+//     "password" => env('MAIL_PASSWORD'),
+//     "sendmail" => "/usr/sbin/sendmail -bs",
+//     'encryption' => env('MAIL_ENCRYPTION', 'null'),
+//     'markdown' => [
+//         'theme' => 'default',
 
-        'paths' => [
-            resource_path('views/vendor/mail'),
-        ],
-    ],
-];
+//         'paths' => [
+//             resource_path('views/vendor/mail'),
+//         ],
+//     ],
+// ];
 
 
 return [

@@ -49,7 +49,7 @@
 
     <footer class="footer" style="background-color: #e3f2fd;">
       <div class="container text-center">
-        <span class="text-muted">Copyright ©2021 SSM INC. </span>
+        <span class="text-muted">Copyright ©2022 SSM INC. </span>
       </div>
     </footer>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"

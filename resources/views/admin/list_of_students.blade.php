@@ -31,7 +31,7 @@
                                             <td><a href="/profile/{{ $student->email }}">{{ $student->email }}</a></td>
                                             <td>
                                                 <form action="{{ route('admin.user.destroy') }}" method="POST"
-                                                    onsubmit="return confirm('Do you really want to Delete this Counselor?');">
+                                                    onsubmit="return confirm('Do you really want to Delete this User?');">
                                                     @csrf
                                                     <input type="hidden" name="email" value="{{ $student->email }}">
                                                     <button class="btn btn-warning">Delete</button>

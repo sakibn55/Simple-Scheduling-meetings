@@ -66,6 +66,7 @@ class ReminderController extends Controller
                 $advisor_avaibility = $advisor->advisor()->get();
 
                 $data = $advisor_avaibility->map(function ($d) {
+
                     $d['className'] = 'bg-success text-white';
                     $d['rendering'] = 'background';
                     return $d;
@@ -102,17 +103,20 @@ class ReminderController extends Controller
 
                         if ($item->status) {
                             $item['className'] = 'bg-primary text-white';
-                            $item['confirmText'] = 'Appointment Confirmed';
+
                         } else {
                             $item['className'] = 'bg-warning text-white';
-                            $item['confirmText'] = 'Appointment Not Confirmed Yet';
                         }
+
+                        $item['id'] = (string) Str::uuid();
                         $data[] = $item;
                     }
                 }
             }
         }
+
         $data = json_encode($data);
+
 
 
         return view('reminder.reminder_view', compact('data', 'advisors'));

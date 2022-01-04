@@ -31,10 +31,10 @@ $(document).ready(function () {
         }
         return false;
     }
-    const currentDate = new Date();
+    var currentDate = new Date();
     var calendar = $('#calendar').fullCalendar({
         editable: true,
-        defaultView: 'agenda',
+        defaultView: 'agendaWeek',
         initialView: 'listWeek',
         header: {
             left: 'prev,next today',
@@ -47,6 +47,8 @@ $(document).ready(function () {
                 end: currentDate.clone().add(5, 'days') // exclusive end, so 3
             };
         },
+        allDaySlot:false,
+        minTime: "9:00:00",
         events: data,
         selectable: true,
         selectHelper: true,
@@ -107,13 +109,16 @@ $(document).ready(function () {
                 }
             })
         },
+        editable: true,
         eventClick: function (event) {
             var slug = event.slug;
+
             $.ajax({
                 url: "/reminder/" + slug,
                 type: "GET",
 
                 success: function (response) {
+
                     $('#titleUpdate').val(response.title);
                     $('#descriptionUpdate').val(response.description);
                     $('#location_title_update').val(response.location_title);
@@ -124,8 +129,9 @@ $(document).ready(function () {
                     $('#UpdateSlug').val(response.slug);
                     $('#UpdateReminderForm').attr('action', '/reminder/' + slug);
 
-
-                    //mapbox update
+                    $('#reminderUpdateModal').modal("show");
+                    calendar.fullCalendar('refetchEvents');
+                    // //mapbox update
                     var longitudeUpdate = $('#longitudeUpdate').val();
                     var lattitudeUpdate = $('#lattitudeUpdate').val();
 
@@ -181,10 +187,12 @@ $(document).ready(function () {
                     });
 
                 }
+
             })
-            $('#reminderUpdateModal').modal("show");
+
         },
         editable: true,
+        droppable: true,
         eventDrop: function (event, delta, revertFunc) {
 
             let $advisor_email = $('#advisor_email').val();
@@ -329,8 +337,4 @@ $(document).ready(function () {
         },
 
     });
-
-
-
-
 });

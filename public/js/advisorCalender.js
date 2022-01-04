@@ -20,6 +20,8 @@ $(document).ready(function () {
                 end: currentDate.clone().add(5, 'days') // exclusive end, so 3
             };
         },
+        allDaySlot: false,
+        minTime: "9:00:00",
         events: '/advisor',
         selectable: true,
         selectHelper: true,

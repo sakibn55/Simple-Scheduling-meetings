@@ -57,7 +57,7 @@ Route::post('/admin/add/advisor', [AdminController::class, 'addAdvisor'])->name(
 Route::post('/admin/delete/user', [AdminController::class, 'destroyUser'])->name('admin.user.destroy');
 
 //admin student
-Route::get('/admin/students', [AdminController::class, 'getStudents'])->name('admin.counselors');
+Route::get('/admin/students', [AdminController::class, 'getStudents']);
 
 
 //advisor
@@ -85,3 +85,5 @@ Route::get('/advisor/avaibility/{advisor_email}', [StudentController::class, 'ad
 //notification read
 Route::post('/notification/read', [UserController::class, 'notification_read']);
 Route::get('/notifications', [UserController::class, 'notification_count']);
+
+Route::post('account/delete', [UserController::class, 'destroy'])->name('account.destroy');

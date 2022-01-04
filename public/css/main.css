@@ -39,3 +39,21 @@ body {
     background: red;
     z-index: 9;
 }
+
+td.fc-axis.fc-time.fc-widget-content {
+    background: white;
+    color: black;
+}
+
+.bg-success.text-white.fc-bgevent {
+    border: 1px solid white;
+}
+td.fc-widget-content {
+    background: red;
+}
+
+.fc th,
+.fc td{
+    border-color: white;
+
+}
