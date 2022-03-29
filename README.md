@@ -35,12 +35,11 @@ Advisor avaibility.
 - Run php artisan key:generate
 - Run php artisan migrate
 - Run php artisan db:seed to run seeders
-- php artisan storage:link
+- Run php artisan storage:link
 - Run php artisan serve
 
 ### Product Function
 
-- **[Download composer](https://getcomposer.org/download/)**
 - Select Advisor
 - Make Appointment
 - Update Profile
