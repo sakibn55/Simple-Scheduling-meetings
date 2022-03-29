@@ -7,47 +7,64 @@
 <a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
 </p>
 
-## About Laravel
+## About Simple Scheduling Meetings
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
-
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+It is built by using the following technologies:
+- Front End – Bootstrap 4.0
+- Backend – PHP, Laravel 8, MySQL
+- Development Tool – VISUAL STUDIO CODE, WAMP
+- **[MAPS API - MAPBOX](https://www.mapbox.com/)**
+- MAILING Service – Gmail/Mailtrap
 
 Laravel is accessible, powerful, and provides tools required for large, robust applications.
 
-## Learning Laravel
+## Purpose
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
+In today’s busy life, where people have so many different tasks to perform, whether it’s related
+to office or house work, remembering each and every single task can sometimes get to the
+nerves.
 
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains over 1500 video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+## Scope
+The main function of this application is to help Students to set Appointment on the basis of their
+Advisor avaibility.
 
-## Laravel Sponsors
+## Mac Os, Ubuntu and windows users continue here:
 
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the Laravel [Patreon page](https://patreon.com/taylorotwell).
+- **[Download composer](https://getcomposer.org/download/)**
+- Run composer install or php composer.phar install
+- Run php artisan key:generate
+- Run php artisan migrate
+- Run php artisan db:seed to run seeders
+- php artisan storage:link
+- Run php artisan serve
 
-### Premium Partners
+### Product Function
 
-- **[Vehikl](https://vehikl.com/)**
-- **[Tighten Co.](https://tighten.co)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Cubet Techno Labs](https://cubettech.com)**
-- **[Cyber-Duck](https://cyber-duck.co.uk)**
-- **[Many](https://www.many.co.uk)**
-- **[Webdock, Fast VPS Hosting](https://www.webdock.io/en)**
-- **[DevSquad](https://devsquad.com)**
-- **[Curotec](https://www.curotec.com/services/technologies/laravel/)**
-- **[OP.GG](https://op.gg)**
-- **[CMS Max](https://www.cmsmax.com/)**
-- **[WebReinvent](https://webreinvent.com/?utm_source=laravel&utm_medium=github&utm_campaign=patreon-sponsors)**
-- **[Lendio](https://lendio.com)**
-- **[Romega Software](https://romegasoftware.com)**
+- **[Download composer](https://getcomposer.org/download/)**
+- Select Advisor
+- Make Appointment
+- Update Profile
+- View Appointments
+- Delete Appointment
+- Set Appointment Confirmed or Denied
+- Search Location
+- Search Appointment
+- Set Available Time Date Range
+- Delete User
+- Add Advisor
+- Login
+- Logout
+- Register
+- Push Notification
+- Email Notification
+## Conclusion
+
+The student consults the academic advisor's public schedule (green colors represent an empty
+time slot and red colors represent a busy time slot.
+The student can choose an empty time slot (shown in green) from the academic advisor's
+schedule. The advisor receives a notification. If the advisor agrees to meet with the student and
+change status to confirmed, the color of the time slot changes from Yellow to Green (on the
+student's dashboard), Changes to Red On other students dashboard.
 
 ## Contributing
 
